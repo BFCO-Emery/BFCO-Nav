@@ -20,13 +20,15 @@ class SecondViewController: UIViewController {
         
         if let username = usernameTextField.text, let pass = passwordTextField.text {
             Auth.auth().signIn(withEmail: username, password: pass, completion: { (user, error) in
-                if let u = user {
+                if user != nil {
                     self.performSegue(withIdentifier: "showMap", sender: self)
                     
                 }
                 else {
-                    
-                    self.present(self.alert, animated: true, completion: nil)
+                    let alert = UIAlertController(title: "Credential Error", message: "Username or password could not be found", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Try again", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    //self.present(self.alert, animated: true, completion: nil)
                 }
             })
         }
